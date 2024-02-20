@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task List</title>
+</head>
+<body>
+
+    <form id="taskForm">
+        <label for="taskInput">Task:</label>
+        <input type="text" id="taskInput">
+        <input type="submit" value="Submit" id="submitButton" disabled>
+    </form>
+
+    <ul id="taskList"></ul>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Query for the submit button and input task field
+            var submitButton = document.getElementById('submitButton');
+            var taskInput = document.getElementById('taskInput');
+
+            // Store initial values
+            var initialSubmitValue = submitButton.disabled;
+            var initialTaskValue = taskInput.value;
+
+            // Listen for input to be typed into the input field
+            taskInput.addEventListener('input', function () {
+                // Enable/Disable the submit button based on input presence
+                submitButton.disabled = taskInput.value.trim() === '';
+            });
+
+            // Listen for submission of form
+            document.getElementById('taskForm').addEventListener('submit', function () {
+                // Find the task that the user just submitted
+                var newTask = taskInput.value;
+
+                // Create a list item for the new task
+                var listItem = document.createElement('li');
+                listItem.textContent = newTask;
+
+                // Add the task to the unordered list
+                document.getElementById('taskList').appendChild(listItem);
+
+                // Reset input field and disable submit button
+                taskInput.value = initialTaskValue;
+                submitButton.disabled = initialSubmitValue;
+
+                // Prevent the default submission of the form
+                return false;
+            });
+        });
+    </script>
+
+</body>
+</html>
